@@ -1,0 +1,100 @@
+version: '3'
+
+services:
+  # Authentication and Authorization Database
+  authenticationDB:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+    volumes:
+      - authenticationDBdata:/var/lib/mysql
+    networks:
+      - authenticationNetwork
+  authenticationDBmigration:
+    image: authenticationdbmigration
+    environment:
+      - DATABASE_URL=authenticationDB
+    networks:
+      - authenticationNetwork
+    depends_on:
+      authenticationDB:
+        condition: service_healthy
+  authentication:
+    image: authentication
+    environment:
+      - DATABASE_URL=authenticationDB
+    ports:
+      - 5003:5003
+    networks:
+      - authenticationNetwork
+    depends_on:
+      - authenticationDBmigration
+  # Admin and Election Database
+  electionDB:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 10
+    volumes:
+      - electionDBdata:/var/lib/mysql
+    networks:
+      - adminNetwork
+  electionDBmigration:
+    image: electiondbmigration
+    environment:
+      - DATABASE_URL=electionDB
+    networks:
+      - adminNetwork
+    depends_on:
+      electionDB:
+        condition: service_healthy
+  admin:
+    image: admin
+    environment:
+      - DATABASE_URL=electionDB
+    ports:
+      - 5001:5001
+    networks:
+      - adminNetwork
+    depends_on:
+      - electionDBmigration
+  # Official, Redis
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - officialNetwork
+  official:
+    image: official
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - 5002:5002
+    networks:
+      - officialNetwork
+  # Daemon
+  daemon:
+    image: daemon
+    environment:
+      - REDIS_HOST=redis
+      - DATABASE_URL=electionDB
+    networks:
+      - officialNetwork
+      - adminNetwork
+
+volumes:
+  authenticationDBdata:
+  electionDBdata:
+
+networks:
+  authenticationNetwork:
+  adminNetwork:
+  officialNetwork:
