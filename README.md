@@ -34,7 +34,7 @@ We will create a repository image, and run it on cluster as a service
   1. `sudo su`
   2. `cd /var/lib/boot2docker`
   3. `vi profile`
-  4. Add `insecure-registry <manager_ip_address:5000>` inside `EXTRA_ARGS`
+  4. Add `--insecure-registry <manager_ip_address:5000>` inside `EXTRA_ARGS`
   5. Save and exit
   6. Restart manager `docker-machine restart manager`
 - Run repository service `docker service create --name registry --replicas 1 --publish 5000:5000 registry:2`
