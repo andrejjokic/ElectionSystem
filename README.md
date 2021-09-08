@@ -23,7 +23,7 @@ The node which executes this command, will become cluster manager: `docker swarm
 You can check nodes ip addresses using `docker-machine ls`\
 When you execute the above command, you will see a command, which you can execute on other nodes in order to become cluster workers\
 You can see all nodes in the cluster using `docker node ls`\
-You can see all the services running on the cluster using `docker service ls`\
+You can see all the services running on the cluster using `docker service ls`
 
 ## Deploy application on a cluster
 ##### Create private repository
