@@ -37,7 +37,7 @@ We will create a repository image, and run it on cluster as a service
   4. Add `--insecure-registry <manager_ip_address:5000>` inside `EXTRA_ARGS`
   5. Save and exit
   6. Restart manager `docker-machine restart manager`
-- Run repository service *on manager*: `docker service create --name registry --replicas 1 --publish 5000:5000 registry:2`
+- Run repository service (*on manager*) : `docker service create --name registry --replicas 1 --publish 5000:5000 registry:2`
 
 ##### Push images to the repository
 *Commands are executed outside manager node*
