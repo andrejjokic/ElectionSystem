@@ -63,5 +63,5 @@ We will create a repository image, and run it on cluster as a service
 
 ##### Deploy the application on a cluster
 *Copy the stack.yaml file to someplace on host machine, accessable to the linux vm*
-1. Copy the stack.yaml to the linux: `/Path/to/stack.yaml stack.yaml`
+1. Copy the stack.yaml to the linux: `cp /Path/to/stack.yaml stack.yaml`
 2. Deploy the images: `docker stack deploy --compose-file stack.yaml election_stack`
