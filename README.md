@@ -18,12 +18,12 @@ Build the images using .dockerfiles, and set their tags:
 `docker-machine.exe create <node_name> --virtualbox-no-vtx-check`
 
 ##### Initialize cluster
-You can connect to a node using `docker-machine ssh <node_name>`
-The node which executes this command, will become cluster manage: `docker swarm init --advertise-addr <ip_address_of_this_node>`
-You can check nodes ip addresses using `docker-machine ls`
-When you execute the above command, you will see a command, which you can execute on other nodes in order to become cluster workers
-You can see all nodes in the cluster using `docker node ls`
-You can see all the services running on the cluster using `docker service ls`
+You can connect to a node using `docker-machine ssh <node_name>`\
+The node which executes this command, will become cluster manager: `docker swarm init --advertise-addr <ip_address_of_this_node>`\
+You can check nodes ip addresses using `docker-machine ls`\
+When you execute the above command, you will see a command, which you can execute on other nodes in order to become cluster workers\
+You can see all nodes in the cluster using `docker node ls`\
+You can see all the services running on the cluster using `docker service ls`\
 
 ## Deploy application on a cluster
 ##### Create private repository
